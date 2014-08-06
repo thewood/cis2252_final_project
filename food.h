@@ -10,5 +10,21 @@
 #define __cis2252_final_project__food__
 
 #include <iostream>
+#include <string>
 
 #endif /* defined(__cis2252_final_project__food__) */
+
+class food {
+public:
+    void setFoodQuantity();
+    void setFoodName();
+    void setFoodCost();
+    double getFoodCost();
+    std::string getFoodName();
+    unsigned int getFoodQuantity();
+    
+private:
+    std::string foodName;
+    unsigned int foodQuantity;
+    double foodCost;
+};
