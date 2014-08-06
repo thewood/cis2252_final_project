@@ -1,0 +1,4 @@
+ADD:Apples,5
+ADD:Cereal,2
+REMOVE:Cereal,1
+ADD:Milke,1
