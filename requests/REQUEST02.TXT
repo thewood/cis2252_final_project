@@ -1,0 +1,5 @@
+ADD:Raspberry,6
+REMOVE:Raspberry,2
+ADD:Orange,5
+ADD:Bread,5
+ADD:Bagel,12
