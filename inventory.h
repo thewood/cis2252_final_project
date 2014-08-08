@@ -10,6 +10,8 @@
 #define __cis2252_final_project__inventory__
 
 #include <iostream>
+#include <string>
+#include "food.h"
 
 #endif /* defined(__cis2252_final_project__inventory__) */
 

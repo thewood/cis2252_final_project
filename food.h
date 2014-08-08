@@ -22,9 +22,9 @@ public:
     void setFoodQuantity(int quantity);
     void setFoodName(std::string name);
     void setFoodCost(double cost);
-    double getFoodCost();
-    std::string getFoodName();
-    int getFoodQuantity();
+    double getFoodCost() const;
+    std::string getFoodName() const;
+    int getFoodQuantity() const;
     
 private:
     std::string foodName;
