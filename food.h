@@ -16,16 +16,18 @@
 
 class food {
 public:
-    explicit food();
-    void setFoodQuantity();
-    void setFoodName();
-    void setFoodCost();
+    
+    food(std::string name, int = 0, double = 0.0);
+    
+    void setFoodQuantity(int quantity);
+    void setFoodName(std::string name);
+    void setFoodCost(double cost);
     double getFoodCost();
     std::string getFoodName();
-    unsigned int getFoodQuantity();
+    int getFoodQuantity();
     
 private:
     std::string foodName;
-    unsigned int foodQuantity;
+    int foodQuantity;
     double foodCost;
 };
