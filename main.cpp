@@ -8,8 +8,29 @@
 
 #include <iostream>
 
-int main(int argc, const char * argv[])
-{
+using std::cout;
+using std::cin;
+using std::endl;
 
+
+int menu();
+
+int main()
+{
+    unsigned int menuChoice;
+    menuChoice = menu();
+    
+    
 }
 
+int menu() {
+    unsigned int choice;
+    cout << "Welcome to the store" << endl;
+    cout << "1.) Enter customer ID" <<endl;
+    cout << "2.) Send a request file" << endl;
+    cout << "3.) view invoice" << endl;
+    cout << "4.) process order" << endl;
+    cout << "5.) quit" <<endl;
+    cin >> choice;
+    return choice;
+}

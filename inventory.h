@@ -12,3 +12,10 @@
 #include <iostream>
 
 #endif /* defined(__cis2252_final_project__inventory__) */
+
+class inventory {
+public:
+    explicit inventory();
+private:
+    
+};

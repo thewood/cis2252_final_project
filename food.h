@@ -16,6 +16,7 @@
 
 class food {
 public:
+    explicit food();
     void setFoodQuantity();
     void setFoodName();
     void setFoodCost();

@@ -10,5 +10,22 @@
 #define __cis2252_final_project__cart__
 
 #include <iostream>
+#include <string>
+#include "food.h"
 
 #endif /* defined(__cis2252_final_project__cart__) */
+
+class cart {
+public:
+    explicit cart();
+    void addFoodQty( std::string, int);
+    double getCartTotal();
+    
+private:
+    
+    std::string foodNames;
+    int foodQty;
+    double cartTotal;
+    
+    
+};
