@@ -1,0 +1,11 @@
+apples,100,.50
+lettuce,100,1.00
+cereal,100,5.00
+milk,100,3.50
+orange,100,.40
+raspberry,100,.25
+bread,100,5.00
+bagel,100,.50
+onion,100,.50
+cucumber,100,.65
+pickle,100,.75

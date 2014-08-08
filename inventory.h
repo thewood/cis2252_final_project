@@ -16,6 +16,14 @@
 class inventory {
 public:
     explicit inventory();
+    void addFoodQty( std::string, int);
+    double getCartTotal();
+    
+
 private:
     
+    std::string foodNames;
+    int foodQty;
+    double cartTotal;
+
 };
