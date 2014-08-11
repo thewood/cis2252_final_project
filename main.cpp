@@ -61,7 +61,8 @@ int main()
         switch (menuChoice) {
             
             case REQUEST:
-                cout << "please enter the txt file to import for processing (type exit to return to menu): "<< endl;
+                cout << "please enter the txt file to import for processing" << endl << "(exit will exit)"
+                    << endl << "> ";
                 batchRequests();
 
                 break;
@@ -77,7 +78,7 @@ int main()
                 cout << "loading inventory controls" << endl;
                 break;
             default:
-                cerr << "Incorrect choice!"<<endl;
+                cerr << "Incorrect choice!"<< endl << "> ";
                 break;
         }
         
@@ -97,7 +98,7 @@ int enterChoice() {
     cout << "3.) process order" << endl;
     cout << "4.) inventory controls" << endl;
     
-    cout << "5.) quit" <<endl;
+    cout << "5.) quit" <<endl << "> ";
     int choice;
     cin >> choice;
     return choice;
@@ -123,16 +124,18 @@ void batchRequests() {
     f.open( requestPath.c_str() );
     while (f.fail()) {
         if (requestPath == "exit") {
-            break;
+            exit(3);
         }
         f.clear();
-        cerr << "File not found"<< endl;
+        cerr << "File not found"<< endl << "please enter the absolute file path"<<endl<<"> ";
         cin >> requestPath;
         f.open(requestPath.c_str());
     }
     
     vector<string> commands;
     string line;
+    
+    
     //adds each line to a vector for processing
     while (std::getline(f, line)) {
         commands.push_back(line);
