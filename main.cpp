@@ -15,7 +15,7 @@
 using namespace std;
 
 int enterChoice();
-void outputLine(int ,double);
+void outputLine(int , string, double);
 
 
 //enum choices { LOGIN = 1, REQUEST = 2, INVOICE = 3, PROCESS = 4, END = 5 };
@@ -23,23 +23,25 @@ enum choices { REQUEST = 1, INVOICE = 2, PROCESS = 3, END = 4 };
 
 int main()
 {
-    /*      file processing mockup
+          //file processing mockup
     ifstream inOut("/Users/tj/Documents/cis2252/cis2252_final_project/cis2252_final_project/backend/CUSTOMERS.TXT",ios::in);
-    
+//    ifstream inOut("./backend/CUSTOMERS.TXT",ios::in);
+
     if (!inOut) {
         cerr << "File not found"<< endl;
         exit (EXIT_FAILURE);
     }
     
     int account;
+    string name;
     double balance;
     
     cout << left << setw(10) << "Account" <<setw(13) <<"number" << "balance" <<endl << fixed<< showpoint;
     
-    while (inOut >> account >> balance) {
-        outputLine (account, balance);
+    while (inOut >> account >> name >> balance) {
+        outputLine (account,name, balance);
     }
-    */
+    
     
     int menuChoice;
 
@@ -73,8 +75,8 @@ int main()
 }
 
 
-void outputLine(int account, double balance) {
-    cout << left << setw(10) << account << setw(13) << account << setw(7) << setprecision(2) << right << balance <<endl;
+void outputLine(int account, string name, double balance) {
+    cout << left << setw(10) << account << setw(13) << name << setw(7) << setprecision(2) << right << balance <<endl;
 }
 
 int enterChoice() {
