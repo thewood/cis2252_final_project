@@ -107,7 +107,7 @@ const std::string currentDate() {
     time_t     now = time(0);
     struct tm  tstruct;
     char       buf[80];
-    tstruct = *localtime(&now); //pointing 
+    tstruct = *localtime(&now); //pointing
     //extract just the date from the system time
     strftime(buf, sizeof(buf), "%x", &tstruct);
     return buf;
@@ -118,8 +118,15 @@ void batchRequests() {
     cin >> requestPath;
     ifstream f;
     f.open( requestPath.c_str() );
+    while (f.fail()) {
+        
+        f.clear();
+        cerr << "File not found"<< endl;
+        cin >> requestPath;
+        f.open(requestPath.c_str());
+    }
+    
     vector<string> commands;
-
     string line;
     //adds each line to a vector for processing
     while (std::getline(f, line)) {
