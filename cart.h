@@ -13,11 +13,10 @@
 #include <string>
 #include "food.h"
 
-#endif /* defined(__cis2252_final_project__cart__) */
-
 class cart {
 public:
     explicit cart();
+    ~cart();
     void setFoodQty( std::string, int);
     double getCartTotal();
     
@@ -29,3 +28,6 @@ private:
     
     
 };
+
+#endif /* defined(__cis2252_final_project__cart__) */
+

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-food::food ( string foodName, int quantity, double foodPrice)
+food::food ( const string& foodName, int quantity, double foodPrice)
     : foodQuantity(0), foodCost(0.00)
 {
     setFoodName(foodName);

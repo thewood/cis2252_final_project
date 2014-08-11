@@ -12,13 +12,12 @@
 #include <iostream>
 #include <string>
 
-#endif /* defined(__cis2252_final_project__food__) */
-
 class food {
+
 public:
-    
-    food(std::string name, int = 0, double = 0.0);
-    
+    food();
+    food( const std::string& name, int = 0, double = 0.0);
+    ~food();
     void setFoodQuantity(int quantity);
     void setFoodName(std::string name);
     void setFoodCost(double cost);
@@ -31,3 +30,6 @@ private:
     int foodQuantity;
     double foodCost;
 };
+
+#endif /* defined(__cis2252_final_project__food__) */
+

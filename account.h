@@ -12,12 +12,12 @@
 #include <iostream>
 #include <string>
 
-#endif /* defined(__cis2252_final_project__account__) */
-
 class account {
-
+    
 public:
     explicit account();
+    account(int accountNumber, const std::string& accountName, double accountBalance);
+    ~account();
     void setAccountNumber(int accountNumber);
     int getAccountNumber();
     
@@ -34,3 +34,6 @@ private:
     std::string accountName;
     
 };
+
+#endif /* defined(__cis2252_final_project__account__) */
+

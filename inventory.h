@@ -13,17 +13,27 @@
 #include <string>
 #include "food.h"
 
-#endif /* defined(__cis2252_final_project__inventory__) */
-
 class inventory {
 public:
     explicit inventory();
-    void addFoodQty( std::string, int);
+    inventory(food);
+    ~inventory();
     
-
+    void setFoodQty( std::string, int);
+    void setFoodPrice ( double price);
+    void setFoodName ( std::string);
+    
+    std::string getFoodName() const;
+    int getFoodQuantity() const;
+    double getFoodPrice() const;
+    
+    
 private:
     
     std::string foodNames;
     int foodQty;
-
+    double foodPrice;
 };
+
+#endif /* defined(__cis2252_final_project__inventory__) */
+
