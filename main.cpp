@@ -61,7 +61,7 @@ int main()
         switch (menuChoice) {
             
             case REQUEST:
-                cout << "please enter the txt file to import for processing: "<< endl;
+                cout << "please enter the txt file to import for processing (type exit to return to menu): "<< endl;
                 batchRequests();
 
                 break;
@@ -116,10 +116,15 @@ const std::string currentDate() {
 void batchRequests() {
     string requestPath;
     cin >> requestPath;
+    if (requestPath == "exit") {
+        exit(3);
+    }
     ifstream f;
     f.open( requestPath.c_str() );
     while (f.fail()) {
-        
+        if (requestPath == "exit") {
+            break;
+        }
         f.clear();
         cerr << "File not found"<< endl;
         cin >> requestPath;
