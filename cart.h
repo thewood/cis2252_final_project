@@ -18,7 +18,7 @@
 class cart {
 public:
     explicit cart();
-    void addFoodQty( std::string, int);
+    void setFoodQty( std::string, int);
     double getCartTotal();
     
 private:
