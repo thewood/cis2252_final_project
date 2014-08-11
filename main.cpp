@@ -107,7 +107,7 @@ const std::string currentDate() {
     time_t     now = time(0);
     struct tm  tstruct;
     char       buf[80];
-    tstruct = *localtime(&now);
+    tstruct = *localtime(&now); //pointing
     //extract just the date from the system time
     strftime(buf, sizeof(buf), "%x", &tstruct);
     return buf;
