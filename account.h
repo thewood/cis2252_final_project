@@ -19,13 +19,13 @@ public:
     account(int accountNumber, const std::string& accountName, double accountBalance);
     ~account();
     void setAccountNumber(int accountNumber);
-    int getAccountNumber();
+    int getAccountNumber() const;
     
     void setAccountBalance(double accountBalance);
-    double getAccountBalance();
+    double getAccountBalance() const;
     
-    void setAccountName(std::string accountName);
-    std::string getAccountName();
+    void setAccountName(const std::string& accountName);
+    std::string getAccountName() const;
     
     
 private:

@@ -11,21 +11,34 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+
 #include "food.h"
+#include "account.h"
+
 
 class cart {
 public:
     explicit cart();
+    cart(account::account);
     ~cart();
     void setFoodQty( std::string, int);
+    
+    void addToCart(food::food, int quantity);
+    void addToCart(food::food);
+    
+    void setCurrentAccount(account::account);
+    
     double getCartTotal();
     
 private:
     
+    food foodItem();
+    account currentAccount();
     std::string foodNames;
     int foodQty;
     double cartTotal;
-    
+    std::vector<food> cartContents;
     
 };
 

@@ -11,12 +11,27 @@
 
 using namespace std;
 
-food::food ( const string& foodName, int quantity, double foodPrice)
-    : foodQuantity(0), foodCost(0.00)
+food::food() : foodName(""), foodQuantity(0), foodCost(0.00)
 {
-    setFoodName(foodName);
     
 }
+
+food::food(const string& foodName) : foodQuantity(0), foodCost(0.00)
+{
+    setFoodName(foodName);
+}
+
+food::food ( const string& foodName, int quantity, double foodPrice)
+{
+    setFoodName(foodName);
+    setFoodCost(foodPrice);
+    setFoodQuantity(quantity);
+}
+
+food::~food(){
+    
+}
+
 
 void food::setFoodName(string name){
     foodName = name;
@@ -40,4 +55,8 @@ void food::setFoodCost(double cost) {
 
 double food::getFoodCost() const {
     return foodCost;
+}
+
+double food::getTotalFoodCost() const {
+    return (foodCost * foodQuantity);
 }

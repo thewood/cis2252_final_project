@@ -13,8 +13,11 @@
 #include <string>
 #include <time.h>
 #include <vector>
-
 #include <algorithm>
+
+
+#include "cart.h"
+#include "food.h"
 
 
 
@@ -131,7 +134,7 @@ void batchRequests() {
         cin >> requestPath;
         f.open(requestPath.c_str());
     }
-    
+    cart myCart;
     vector<string> commands;
     string line;
     
@@ -140,10 +143,33 @@ void batchRequests() {
     while (std::getline(f, line)) {
         commands.push_back(line);
     }
-    //debug / displaying each line
+    
     for (int i=0; i<commands.size(); i++) {
+
+        //debugging purposes
 		cout << commands[i] << '\n';
+        
+        //work space variables
+        string newCommand;
+        string foodToAdd;
+        int qtyToAdd;
+        
+        //finding locations split by different delimiters
+        size_t commandLocation = commands[i].find_first_of(":");
+        size_t foodLocation = commands[i].find_first_of(",");
+        
+        
+        //parsing the commands
+        newCommand = commands[i].substr(0,commandLocation);
+        foodToAdd = commands[i].substr(commandLocation +1, foodLocation - commandLocation -1);
+        qtyToAdd = stoi(commands[i].substr(foodLocation+1));
+
+        cout <<newCommand<< endl << foodToAdd << endl << qtyToAdd <<endl;
 	}
+    
+    
+    
+    
     
     f.close();
     
