@@ -1,5 +1,5 @@
-ADD:Raspberry,6
-REMOVE:Raspberry,2
-ADD:Orange,5
-ADD:Bread,5
-ADD:Bagel,12
+ADD:raspberry,6
+REMOVE:raspberry,2
+ADD:orange,5
+ADD:bread,5
+ADD:bagel,12

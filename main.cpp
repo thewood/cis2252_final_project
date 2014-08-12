@@ -18,7 +18,8 @@
 
 #include "cart.h"
 #include "food.h"
-
+#include "inventory.h"
+#include "account.h"
 
 
 using namespace std;
@@ -27,37 +28,17 @@ int enterChoice();
 void outputLine(int , string, double);
 const std::string currentDate();
 void batchRequests();
+vector<account> loadAccounts();
 
-
-//enum choices { LOGIN = 1, REQUEST = 2, INVOICE = 3, PROCESS = 4, END = 5 };
 enum choices { REQUEST = 1, INVOICE = 2, PROCESS = 3, INVEN_CONTROLS = 4, END = 5 };
+enum comms { ADD = 1, REMOVE, CARTREPORT, CHECKOUT, CREDIT };
 
 int main()
 {
-    /*
-    //file processing mockup
-    ifstream inOut("/Users/tj/Documents/cis2252/cis2252_final_project/cis2252_final_project/backend/CUSTOMERS.TXT",ios::in);
-
+    inventory storesUp;
+    storesUp.toString();
     
-    // this didn't seem to work
-    //    ifstream inOut(".\backend\\CUSTOMERS.TXT",ios::in);
-
-    if (!inOut) {
-        cerr << "File not found"<< endl;
-        exit (EXIT_FAILURE);
-    }
     
-    int account;
-    string name;
-    double balance;
-    
-    cout << left << setw(10) << "Account" <<setw(13) <<"number" << "balance" <<endl << fixed<< showpoint;
-    
-    while (inOut >> account >> name >> balance) {
-        outputLine (account,name, balance);
-    }
-    
-    */
     int menuChoice;
 
     while ( ( menuChoice = enterChoice()) != END ) {
@@ -123,54 +104,99 @@ void batchRequests() {
     if (requestPath == "exit") {
         exit(3);
     }
-    ifstream f;
-    f.open( requestPath.c_str() );
-    while (f.fail()) {
+    ifstream inOut;
+    inOut.open( requestPath.c_str() );
+    while (inOut.fail()) {
         if (requestPath == "exit") {
             exit(3);
         }
-        f.clear();
+        inOut.clear();
         cerr << "File not found"<< endl << "please enter the absolute file path"<<endl<<"> ";
         cin >> requestPath;
-        f.open(requestPath.c_str());
+        inOut.open(requestPath.c_str());
     }
-    cart myCart;
+    vector<account> accounts = loadAccounts();
+    //cart myCart;
     vector<string> commands;
     string line;
     
     
     //adds each line to a vector for processing
-    while (std::getline(f, line)) {
+    while (std::getline(inOut, line)) {
         commands.push_back(line);
     }
     
     for (int i=0; i<commands.size(); i++) {
-
-        //debugging purposes
-		cout << commands[i] << '\n';
         
         //work space variables
         string newCommand;
+        int accountNumber;
         string foodToAdd;
         int qtyToAdd;
         
         //finding locations split by different delimiters
         size_t commandLocation = commands[i].find_first_of(":");
-        size_t foodLocation = commands[i].find_first_of(",");
+        size_t accountLocation = commands[i].find_first_of(",");
+        size_t foodLocation = commands[i].find_last_of(",");
         
         
         //parsing the commands
         newCommand = commands[i].substr(0,commandLocation);
-        foodToAdd = commands[i].substr(commandLocation +1, foodLocation - commandLocation -1);
+        accountNumber = stoi(commands[i].substr(commandLocation +1, accountLocation - commandLocation -1));
+        foodToAdd = commands[i].substr(accountLocation +1, foodLocation - accountLocation -1);
         qtyToAdd = stoi(commands[i].substr(foodLocation+1));
-
-        cout <<newCommand<< endl << foodToAdd << endl << qtyToAdd <<endl;
-	}
+        
+        
+        
+//        switch (newCommand) {
+//         
+//            default:
+//                cerr << "Incorrect choice!"<< endl << "> ";
+//                break;
+//        }
+        
+        
+        food workingFood(foodToAdd,qtyToAdd);
+        for ( int i = 0; i < accounts.size(); ++i){
+            
+            if (accountNumber == accounts[i].getAccountNumber()) {
+                cout<<"we have a match"<<endl;
+                accounts[i].addToCart(workingFood);
+            }
+        }
+    }
     
     
     
-    
-    
-    f.close();
+    inOut.close();
     
 }
+
+vector<account> loadAccounts() {
+    
+    vector<account> acc;
+    std::ifstream inOut("/Users/tj/Documents/cis2252/cis2252_final_project/cis2252_final_project/backend/CUSTOMERS.TXT",
+                        std::ios::in);
+    if (!inOut) {
+        std::cerr << "CUSTOMER FILE MISSING SHOULD BE LOCATED IN ./backend/ SUBDIRECTORY FROM WHICH PROGRAM WAS EXECUTED"
+        << std::endl;
+        exit (EXIT_FAILURE);
+    }
+    std::string buffer;
+    while (std::getline(inOut, buffer)) {
+        
+        
+        //finding locations split by different delimiters
+        size_t accountNumberLocation = buffer.find_first_of(":");
+        size_t creditLocation = buffer.find_last_of(",");
+        
+        account currentAccount( stoi(buffer.substr(0,accountNumberLocation)),
+                         (buffer.substr(accountNumberLocation +1, creditLocation - accountNumberLocation -1)),
+                         stod(buffer.substr(creditLocation+1)));
+        
+        acc.push_back(currentAccount);
+    }
+    inOut.close();
+    return acc;
+}
+

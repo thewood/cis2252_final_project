@@ -16,8 +16,9 @@ class food {
 
 public:
     food();
-    food (const std::string& name);
-    food( const std::string& name, int = 0, double = 0.0);
+    food (const std::string& name);// int = 0, double = 0.0
+    food (const std::string& name, int);
+    food( const std::string&, int, double);
     ~food();
     void setFoodQuantity(int quantity);
     void setFoodName(std::string name);
@@ -26,6 +27,7 @@ public:
     double getTotalFoodCost() const;
     std::string getFoodName() const;
     int getFoodQuantity() const;
+    void toString();
     
 private:
     std::string foodName;

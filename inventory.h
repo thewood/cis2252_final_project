@@ -11,12 +11,13 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "food.h"
 
 class inventory {
 public:
-    explicit inventory();
-    inventory(food);
+    inventory();
+//    inventory(food);
     ~inventory();
     
     void setFoodQty( std::string, int);
@@ -25,12 +26,15 @@ public:
     
     std::string getFoodName() const;
     int getFoodQuantity() const;
-    double getFoodPrice() const;
+    double getFoodPrice(std::string) const;
     
+    void toString();
     
 private:
-    
+    std::vector <food> currentInventory;
     std::string foodNames;
+    
+    food foodItem();
     int foodQty;
     double foodPrice;
 };

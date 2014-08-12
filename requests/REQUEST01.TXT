@@ -1,5 +1,5 @@
-ADD:Apples,5
-ADD:Cereal,2
-REMOVE:Cereal,1
-ADD:Milk,1
-ADD:Oranges,5
+ADD:12345678,apples,5
+ADD:12345678,cereal,2
+REMOVE:12345678,cereal,1
+ADD:45678901,milk,1
+ADD:45678901,oranges,5

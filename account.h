@@ -11,12 +11,16 @@
 
 #include <iostream>
 #include <string>
+#include "cart.h"
 
-class account {
+class account : public cart
+
+{
     
 public:
-    explicit account();
+    account();
     account(int accountNumber, const std::string& accountName, double accountBalance);
+    //account(account const &);
     ~account();
     void setAccountNumber(int accountNumber);
     int getAccountNumber() const;
@@ -27,11 +31,15 @@ public:
     void setAccountName(const std::string& accountName);
     std::string getAccountName() const;
     
+    void addToCart(food);
+    void removeFromCart(food);
+    double getTotal() const;
     
 private:
     double accountBalance;
     int accountNumber;
     std::string accountName;
+    cart userCart;
     
 };
 
