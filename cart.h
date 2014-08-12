@@ -22,23 +22,25 @@ public:
     explicit cart();
     cart(account::account);
     ~cart();
-    void setFoodQty( std::string, int);
+    //void setFoodQty( std::string, int);
     
     void addToCart(food::food, int quantity);
     void addToCart(food::food);
     
     void setCurrentAccount(account::account);
     
-    double getCartTotal();
+    double getCartTotal() const;
     
 private:
     
     food foodItem();
     account currentAccount();
+    
+    std::vector<food> cartContents;
     std::string foodNames;
     int foodQty;
     double cartTotal;
-    std::vector<food> cartContents;
+    
     
 };
 

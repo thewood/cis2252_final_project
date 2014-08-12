@@ -40,3 +40,11 @@ void cart::addToCart(food::food food) {
 void cart::setCurrentAccount(account::account userAccount) {
     currentAccount() = userAccount;
 }
+
+double cart::getCartTotal() const {
+    double cartTotal = 0.00;
+    for (int i=0; i < cartContents.size(); i++){
+        cartTotal = cartTotal + (cartContents[i].getFoodQuantity() * cartContents[i].getFoodCost());
+    }
+    return cartTotal;
+}
