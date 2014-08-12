@@ -35,8 +35,8 @@ enum comms { ADD = 1, REMOVE, CARTREPORT, CHECKOUT, CREDIT };
 
 int main()
 {
-    inventory storesUp;
-    storesUp.toString();
+    //inventory storesUp;
+    //storesUp.toString();
     
     
     int menuChoice;
@@ -99,6 +99,8 @@ const std::string currentDate() {
 }
 
 void batchRequests() {
+    inventory storesUp;
+    
     string requestPath;
     cin >> requestPath;
     if (requestPath == "exit") {
@@ -160,8 +162,10 @@ void batchRequests() {
         for ( int i = 0; i < accounts.size(); ++i){
             
             if (accountNumber == accounts[i].getAccountNumber()) {
-                cout<<"we have a match"<<endl;
+                double test = storesUp.searchForPrice(workingFood.getFoodName());
+                workingFood.setFoodCost(storesUp.searchForPrice(workingFood.getFoodName()));
                 accounts[i].addToCart(workingFood);
+                cout << endl << endl << test <<endl;
             }
         }
     }

@@ -23,19 +23,21 @@ public:
     void setFoodQty( std::string, int);
     void setFoodPrice ( double price);
     void setFoodName ( std::string);
+    void toString();
     
     std::string getFoodName() const;
     int getFoodQuantity() const;
     double getFoodPrice(std::string) const;
-    
-    void toString();
+    int getInventorySize() const;
+    double searchForPrice(std::string);
     
 private:
     std::vector <food> currentInventory;
     std::string foodNames;
     
-    food foodItem();
+    food foodItem;
     int foodQty;
+    int inventorySize;
     double foodPrice;
 };
 

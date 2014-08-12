@@ -11,8 +11,6 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <iterator>
-#include <algorithm>
 
 #include "inventory.h"
 #include "food.h"
@@ -27,24 +25,13 @@ inventory::inventory(){
         << std::endl;
         exit (EXIT_FAILURE);
     }
-    std::string buffer;
-//  std::vector< food > inventory;
     
+    std::string buffer;
     while (std::getline(inOut, buffer)) {
-
         
         //finding locations split by different delimiters
         size_t foodLocation = buffer.find_first_of(",");
         size_t quantityLocation = buffer.find_last_of(",");
-        
-//        std::string foodName;
-//        int quantity;
-//        double price;
-//        //parsing the inventory
-//        foodName = buffer.substr(0,foodLocation);
-//        quantity = stoi(buffer.substr(foodLocation +1, quantityLocation - foodLocation -1));
-//        price = stod(buffer.substr(quantityLocation+1));
-//        food currentFood(foodName, quantity, price);
         
         food currentFood( buffer.substr(0,foodLocation),
                          stoi(buffer.substr(foodLocation +1, quantityLocation - foodLocation -1)),
@@ -57,7 +44,7 @@ inventory::inventory(){
     currentInventory.shrink_to_fit();
     
     inOut.close();
-    
+    inventorySize = currentInventory.size();
 }
 
 inventory::~inventory(){
@@ -69,7 +56,11 @@ inventory::~inventory(){
 ////        output_file.write( reinterpret_cast< const char *> ( &i), sizeof(currentInventory));
 ////    }
     
-    
+    //code to save the inventory here
+}
+
+int inventory::getInventorySize() const {
+    return inventorySize;
 }
 
 void inventory::toString() {
@@ -94,4 +85,22 @@ double inventory::getFoodPrice(std::string foodName) const{
     }
     // iterator to vector element:
     return 0.00;
+}
+
+std::string inventory::getFoodName() const{
+    return foodNames;
+}
+
+double inventory::searchForPrice(std::string foodName) {
+    double stupid = 0.00;
+
+        for (int j = 0; j < currentInventory.size(); j++) {
+            std::cout <<std::endl<<"comparing:::" << currentInventory[j].getFoodName()<< std::endl<< " with "<< foodName;
+            if (currentInventory[j].getFoodName() == foodName) {
+                std::cout<<" we have a match: " <<currentInventory[j].getFoodCost()<<std::endl;
+                stupid = currentInventory[j].getFoodCost();
+            }
+        }
+    
+    return stupid;
 }
