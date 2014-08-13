@@ -14,7 +14,9 @@ using namespace std;
 
 account::account() : accountName(""), accountBalance(0.00), accountNumber(0)
 {
-    //userCart();
+    cart userCart;
+    cart * const cartPtr = &userCart;
+
 }
 
 //account::account(account const &buffer){
@@ -23,12 +25,14 @@ account::account() : accountName(""), accountBalance(0.00), accountNumber(0)
 //    setAccountNumber(buffer.getAccountNumber());
 //}
 
-account::account(int accountNumber, const string& accountName, double accountBalance) {
+account::account(int accountNumber, const string & accountName, double accountBalance) {
     
     setAccountBalance(accountBalance);
     setAccountName(accountName);
     setAccountNumber(accountNumber);
     cart userCart;
+    //cart * const cartPtr = &userCart;
+
 }
 
 
@@ -51,7 +55,11 @@ int account::getAccountNumber() const {
 }
 
 void account::setAccountName(const std::string& accName){
-    accountName = accName;
+    int len = (int)accName.size();
+    len = ( len < 15 ? len : 14 );
+    accName.copy( accountName, len);
+    accountName[len] = '\0';
+    //accountName = accName;
 }
 
 std::string account::getAccountName() const {

@@ -17,14 +17,13 @@ using namespace std;
 
 cart::cart(){
     std::vector<food> cartContents;
+    //std::vector<food> * const cartPtr = &cartContents;
+    //cart * cartPointer = &cartContents;
 }
-
-//cart::cart(account::account currentUser){
-//    setCurrentAccount(currentUser);
-//}
 
 cart::~cart(){
     cartContents.clear();
+    //delete cartPointer;
 }
 
 void cart::addToCart(food::food food, int qty) {
@@ -38,9 +37,9 @@ void cart::addToCart(food::food food) {
     cartContents.push_back(food);
 }
 
-//void cart::setCurrentAccount(account::account userAccount) {
-//    //currentAccount(userAccount.getAccountNumber(),userAccount.getAccountName(),userAccount.getAccountBalance());
-//    //currentAccount() = userAccount;
+//cart * returnCartPointer(){
+//    cart * cartPointer = cartPointer;
+//    return cartPtr;
 //}
 
 double cart::getCartTotal() const {

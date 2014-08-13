@@ -14,6 +14,7 @@
 #include <time.h>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
 
 
 #include "cart.h"
@@ -25,17 +26,27 @@
 using namespace std;
 
 int enterChoice();
+int inventoryChoice();
 void outputLine(int , string, double);
 const std::string currentDate();
 void batchRequests();
 vector<account> loadAccounts();
+void inventoryControl();
 
 enum choices { REQUEST = 1, INVOICE = 2, PROCESS = 3, INVEN_CONTROLS = 4, END = 5 };
 enum comms { ADD = 1, REMOVE, CARTREPORT, CHECKOUT, CREDIT };
+enum choices2 { ALL = 1, SINGLE , RESTOCK , ADDITEM, BACK };
+
+
+inventory storeTotal;
+//inventory * const invtPtr = &storeTotal;
+
+
 
 int main()
 {
-    //inventory storesUp;
+//    inventory storeTotal;
+//    inventory * const invtPtr = &storeTotal;
     //storesUp.toString();
     
     
@@ -45,7 +56,7 @@ int main()
         switch (menuChoice) {
             
             case REQUEST:
-                cout << "please enter the txt file to import for processing" << endl << "(exit will exit)"
+                cout << "please enter the txt file to import for processing" << endl << "(exit will exit program)"
                     << endl << "> ";
                 batchRequests();
 
@@ -59,7 +70,10 @@ int main()
 
                 break;
             case INVEN_CONTROLS:
-                cout << "loading inventory controls" << endl;
+                //system("clr");
+                cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n...loading inventory controls...\n\n\n\n\n\n\n\n\n\n" << endl;
+                inventoryControl();
+                
                 break;
             default:
                 cerr << "Incorrect choice!"<< endl << "> ";
@@ -70,22 +84,57 @@ int main()
     
 }
 
+int inventoryMenu() {
+    cout << "would you like to: "<< endl;
+    cout <<"1.) list all items in inventory" << endl;
+    cout <<"2.) list a single item" << endl;
+    cout <<"3.) restocking" << endl;
+    cout <<"4.) add new items" << endl;
+    cout <<"5.) return" << endl << "> ";
+    int choice2;
+    cin >> choice2;
+    return choice2;
+}
+
+void inventoryControl() {
+    int cho;
+    while ( (cho = inventoryMenu()) != BACK) {
+        switch (cho) {
+            case ALL:
+                storeTotal.report();
+                break;
+            case SINGLE:
+                storeTotal.indvReport();
+                break;
+            case RESTOCK:
+                break;
+            case ADDITEM:
+                storeTotal.addItem();
+                break;
+            case BACK:
+                break;
+            default:
+                cerr << "incorrect choice!"<< endl << "> ";
+                break;
+        }
+    }
+}
 
 void outputLine(int account, string name, double balance) {
     cout << left << setw(10) << account << setw(13) << name << setw(7) << setprecision(2) << right << balance <<endl;
 }
 
 int enterChoice() {
-    cout << "Welcome to the store! " << endl << "today is: " << currentDate()<< endl;
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the store! " << endl << "today is: " << currentDate()<< endl;
     cout << "1.) Send a request file" << endl;
     cout << "2.) view invoice" << endl;
     cout << "3.) process order" << endl;
     cout << "4.) inventory controls" << endl;
     
     cout << "5.) quit" <<endl << "> ";
-    int choice;
-    cin >> choice;
-    return choice;
+    int choice1;
+    cin >> choice1;
+    return choice1;
 }
 
 const std::string currentDate() {
@@ -107,6 +156,7 @@ void batchRequests() {
         exit(3);
     }
     ifstream inOut;
+    inOut.clear();
     inOut.open( requestPath.c_str() );
     while (inOut.fail()) {
         if (requestPath == "exit") {
@@ -148,17 +198,8 @@ void batchRequests() {
         foodToAdd = commands[i].substr(accountLocation +1, foodLocation - accountLocation -1);
         qtyToAdd = stoi(commands[i].substr(foodLocation+1));
         
-        
-        
-//        switch (newCommand) {
-//         
-//            default:
-//                cerr << "Incorrect choice!"<< endl << "> ";
-//                break;
-//        }
-        
-        
         food workingFood(foodToAdd,qtyToAdd);
+        
         for ( int i = 0; i < accounts.size(); ++i){
             
             if (accountNumber == accounts[i].getAccountNumber()) {

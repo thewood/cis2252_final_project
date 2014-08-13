@@ -17,23 +17,29 @@
 class inventory {
 public:
     inventory();
-//    inventory(food);
     ~inventory();
     
-    void setFoodQty( std::string, int);
+    void setFoodQty( const std::string &, int);
     void setFoodPrice ( double price);
-    void setFoodName ( std::string);
+    void setFoodName ( const std::string &);
     void toString();
+    void addItem();
+    void saveInventory();
     
     std::string getFoodName() const;
+    
     int getFoodQuantity() const;
-    double getFoodPrice(std::string) const;
     int getInventorySize() const;
-    double searchForPrice(std::string);
+    
+    void report();
+    void indvReport();
+    
+    double searchForPrice(const std::string &);
     
 private:
+    
     std::vector <food> currentInventory;
-    std::string foodNames;
+    char foodName[10];
     
     food foodItem;
     int foodQty;

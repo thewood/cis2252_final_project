@@ -34,13 +34,15 @@ public:
     void addToCart(food);
     void removeFromCart(food);
     double getTotal() const;
+    void toString();
     
 private:
     double accountBalance;
     int accountNumber;
-    std::string accountName;
+//  std::string accountName;
+    char accountName[15];
     cart userCart;
-    
+    cart * const cartPtr = &userCart;
 };
 
 #endif /* defined(__cis2252_final_project__account__) */

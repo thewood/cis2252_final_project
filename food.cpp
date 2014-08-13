@@ -18,18 +18,18 @@ food::food() : foodName(""), foodQuantity(0), foodCost(0.00)
     
 }
 
-food::food(const string& foodName) : foodQuantity(0), foodCost(0.00)
+food::food(const string &foodName) : foodQuantity(0), foodCost(0.00)
 {
     setFoodName(foodName);
 }
 
-food::food( const string& foodName, int quantity) : foodCost(0.00)
+food::food( const string &foodName, int quantity) : foodCost(0.00)
 {
     setFoodName(foodName);
     setFoodQuantity(quantity);
 }
 
-food::food ( const string& foodName, int quantity, double foodPrice)
+food::food ( const string &foodName, int quantity, double foodPrice)
 {
     setFoodName(foodName);
     setFoodCost(foodPrice);
@@ -41,8 +41,12 @@ food::~food(){
 }
 
 
-void food::setFoodName(string name){
-    foodName = name;
+void food::setFoodName(const string &foodN){
+    int len = foodN.size();
+    len = ( len < 10 ? len : 9 );
+    foodN.copy( foodName, len);
+    foodName[len] = '\0';
+//  foodName = name;
 }
 
 string food::getFoodName() const {

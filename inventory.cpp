@@ -19,13 +19,38 @@ inventory::inventory(){
     //upon construction load the inventory file
     
     std::ifstream inOut("/Users/tj/Documents/cis2252/cis2252_final_project/cis2252_final_project/backend/MAININVENTORY.TXT",
-                        std::ios::in);
+                        std::ios::in | std::ios::binary);
     if (!inOut) {
         std::cerr << "INVENTORY FILE MISSING SHOULD BE LOCATED IN ./backend/ SUBDIRECTORY FROM WHICH PROGRAM WAS EXECUTED"
         << std::endl;
         exit (EXIT_FAILURE);
     }
-    
+    //binary part can't get to work or spews random info
+//    cost per: 1.72321e-259
+//    food name: bread,100,5.00
+//    bagel,100\330F
+//quantity: 1644834864
+//    cost per: 1.39838e-76
+//    food name: ,.50
+//    onion,100,.50
+//    cucum\330F
+//quantity: 774647856
+//    cost per: 1.88755e+219
+//    food name: ber,100,.65
+//    pickle,100,.\330F
+//quantity: 1801677168
+//    cost per: 2.834e-86
+//    food buff;
+//    inOut.read(reinterpret_cast < char * > (&buff), sizeof(food));
+//
+//    while (inOut && !inOut.eof()){
+//        if (buff.getFoodQuantity() != 0) {
+//            
+//        }
+//        buff.toString();
+//        inOut.read(reinterpret_cast < char * > (&buff), sizeof(food));
+//    }
+//    
     std::string buffer;
     while (std::getline(inOut, buffer)) {
         
@@ -36,15 +61,17 @@ inventory::inventory(){
         food currentFood( buffer.substr(0,foodLocation),
                          stoi(buffer.substr(foodLocation +1, quantityLocation - foodLocation -1)),
                          stod(buffer.substr(quantityLocation+1)));
-       // currentFood.toString();
-        currentInventory.push_back(currentFood);
         
+        currentInventory.push_back(currentFood);
+        //std::cout << currentFood.getFoodName();
 
     }
     currentInventory.shrink_to_fit();
     
+    
+    
     inOut.close();
-    inventorySize = currentInventory.size();
+    inventorySize = (int)currentInventory.size();
 }
 
 inventory::~inventory(){
@@ -57,14 +84,67 @@ inventory::~inventory(){
 ////    }
     
     //code to save the inventory here
+    saveInventory();
 }
 
 int inventory::getInventorySize() const {
     return inventorySize;
 }
 
+void inventory::addItem(){
+    std::string name;
+    int quantity;
+    double cost;
+    std::cout <<"please enter the name for the new item" << std::endl << "> ";
+    std::cin >> name;
+    std::cout <<"please enter the quantity" << std::endl << "> ";
+    std::cin >> quantity;
+    std::cout <<"please enter the cost of the new item" << std::endl << "> ";
+    std::cin >> cost;
+    food newItem(name,quantity,cost);
+    currentInventory.push_back(newItem);
+    
+}
+
+void inventory::report() {
+    std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncontents in inventory" << std::endl;
+    std::cout << std::left << std::setw(10)
+    << "Item:" << std::setw(16)
+    << "Quantity:" << std::setw(11) << std::setprecision(3)
+    << "Price:" <<std::endl;
+
+    for ( int i = 0; i < currentInventory.size(); ++i){
+        std::cout << std::left << std::setw(10) << currentInventory[i].getFoodName()
+            << std::setw(16) << currentInventory[i].getFoodQuantity()
+            << std::setw(11) << std::setprecision(2) << std::fixed << std::showpoint
+            << currentInventory[i].getFoodCost() << std::endl;
+    }
+    
+}
+
+void inventory::indvReport() {
+    bool success = 1;
+    std::cout << "please enter an item you wish to search for " << std::endl << "> ";
+    std::string input ("");
+    std::cin >> input;
+    for (int i = 0; i < currentInventory.size(); ++i) {
+        if (currentInventory[i].getFoodName().compare(input) == 0) {
+            success = 1;
+            std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << std::left << std::setw(10)
+            << "Item:" << std::setw(16)
+            << "Quantity:" << std::setw(11) << std::setprecision(2) << std::right
+            << "Price:" <<std::endl;
+            std::cout << std::left << std::setw(10) << currentInventory[i].getFoodName()
+            << std::setw(16) << currentInventory[i].getFoodQuantity()
+            << std::setw(11) << std::setprecision(2) << std::right << std::fixed << std::showpoint
+            << currentInventory[i].getFoodCost() << "\n\n\n\n\n\n\n\n" << std::endl;
+        }
+    }
+
+}
+
 void inventory::toString() {
-    std::cout << "contents in inventory" << std::endl;
+    //std::cout << "contents in inventory" << std::endl;
     for ( int i = 0; i < currentInventory.size(); ++i){
 
         std::cout << "food name: " << currentInventory[i].getFoodName()
@@ -74,24 +154,12 @@ void inventory::toString() {
         
     }
 }
-double inventory::getFoodPrice(std::string foodName) const{
-
-    for ( int i = 0; i < currentInventory.size(); ++i){
-        std::cout << currentInventory[i].getFoodName() << foodName << std::endl;
-        if (currentInventory[i].getFoodName() == foodName){
-            
-            return currentInventory[i].getFoodCost();
-        }
-    }
-    // iterator to vector element:
-    return 0.00;
-}
 
 std::string inventory::getFoodName() const{
-    return foodNames;
+    return foodName;
 }
 
-double inventory::searchForPrice(std::string foodName) {
+double inventory::searchForPrice(const std::string &foodName) {
     double stupid = 0.00;
 
         for (int j = 0; j < currentInventory.size(); j++) {
@@ -103,4 +171,42 @@ double inventory::searchForPrice(std::string foodName) {
         }
     
     return stupid;
+}
+
+void inventory::saveInventory() {
+    
+    
+    //this was the binary write code....
+    //possibly worked was probably wrong though i kept reading that data files are not very portable
+    //since im not in windows....i wasn't sure it would be the best
+    
+//    std::fstream outInventory
+//        ("/Users/tj/Documents/cis2252/cis2252_final_project/cis2252_final_project/backend/maininventory.dat", std::ios::in | std::ios::out | std::ios::binary);
+//    if (!outInventory) {
+//        std::cerr << "file error" << std::endl;
+//        exit (EXIT_FAILURE);
+//    }
+//    
+//    for (int j = 0; j < currentInventory.size(); j++) {
+// //       std::string buffer (currentInventory[j].getFoodName());
+////        std::cout << sizeof(currentInventory[j])<< std::endl;
+//        food buff = *new food(currentInventory[j].getFoodName(),currentInventory[j].getFoodQuantity(),currentInventory[j].getFoodCost());
+//        outInventory.write( reinterpret_cast < const char * > (&buff), sizeof(buff));
+//  //      delete &buff;
+//    }
+//    outInventory.close();
+    
+    
+    
+    std::ofstream outPutFile("/Users/tj/Documents/cis2252/cis2252_final_project/cis2252_final_project/backend/MAININVENTORY.TXT",
+                        std::ios::in | std::ios::binary);
+    if (!outPutFile) {
+        std::cerr << "INVENTORY FILE MISSING SHOULD BE LOCATED IN ./backend/ SUBDIRECTORY FROM WHICH PROGRAM WAS EXECUTED"
+        << std::endl;
+        exit (EXIT_FAILURE);
+    }
+    for (int j= 0; j < currentInventory.size(); ++j) {
+        outPutFile << currentInventory[j].getFoodName() <<',' << currentInventory[j].getFoodQuantity() << ',' << currentInventory[j].getFoodCost() << std::endl;
+    }
+    
 }
